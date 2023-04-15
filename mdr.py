@@ -7,10 +7,21 @@ P = np.zeros((num_states, num_actions, num_states))
 R = np.zeros((num_states, num_actions, num_states))
 
 # Preenchendo as matrizes de transição e recompensa
+
+#   _____  
+#  |  __ \ 
+#  | |__) |
+#  |  ___/ 
+#  | |     
+#  |_|     
+
+# Preenchendo P -> Matriz de transição
 # P[s, a, s'] = probabilidade de ir do estado s para o estado s' ao executar a ação a
 
+# =================================================================================================
 # estado 0 (frio) -> ação 0 (devagar) -> vai para 0 (frio) com prob 1.0 ou vai para 1 (quente) com prob 0.0
 P[0 , 0 , 0] = 1.0
+
 # estado 0 (frio) -> ação 1 (rapido) -> vai para 0 (frio) com prob 0.5 ou vai para 1 (quente) com prob 0.5
 P[0 , 1 , 0] = 0.5
 P[0 , 1 , 1] = 0.5
@@ -26,8 +37,21 @@ P[2 , 0 , 2] = 1.0
 
 # estado 2 (fogo) -> ação 1 (rapido) -> vai para 2 (fogo) com prob 1.0
 P[2 , 1 , 2] = 1.0
+# =================================================================================================
 
+
+
+#   _____
+#  |  __ \ 
+#  | |__) |
+#  |  _  / 
+#  | | \ \ 
+#  |_|  \_\
+
+# Preenchendo R -> Matriz de recompensa
 # R[s, a, s'] = recompensa ao ir do estado s para o estado s' ao executar a ação a (deve ser um valor numérico)
+
+# =================================================================================================
 
 # estado 0 (frio) -> ação 0 (devagar) -> recompensa 1.0 ao ir para 0 (frio) ou 0.0 ao ir para 1 (quente)
 R[0, 0, 0] = 1.0
@@ -47,6 +71,8 @@ R[2, 0, 2] = -1.0
 
 # estado 2 (fogo) -> ação 1 (rapido) -> recompensa -1.0 ao ir para 2 (fogo)
 R[2, 1, 2] = -1.0
+
+# =================================================================================================
 
 # Definindo as variáveis para a iteração
 gamma = 0.9
@@ -98,4 +124,4 @@ def find_path(n):
     return path
 
 # Exemplo de uso
-print(find_path(10))  # encontra um caminho de tamanho 10 iniciando no estado frio
+print(find_path(100))
