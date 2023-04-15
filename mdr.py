@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 # Definindo as variáveis do problema
 num_states = 3
@@ -76,12 +77,12 @@ R[2, 1, 2] = -1.0
 
 # Definindo as variáveis para a iteração
 gamma = 0.9
-max_iterations = 100
-epsilon = 0.0001
+max_iterations = 100000
+epsilon = 0.000000001
 V = np.zeros(num_states)
 
 # Algoritmo de Value Iteration
-# Calculando o valor ótimo para cada estado do problema de MDP
+# Calculando o valor ideal para cada estado do problema de MDP
 # V(s) = max_a sum_s' P(s'|s,a) * (R(s'|s,a) + gamma * V(s'))
 for i in range(max_iterations):
     delta = 0
@@ -98,7 +99,7 @@ for i in range(max_iterations):
     if delta < epsilon:
         break
 
-# Encontrando a política ótima
+# Encontrando a política ideal
 # pi(s) = argmax_a sum_s' P(s'|s,a) * (R(s'|s,a) + gamma * V(s'))
 policy = np.zeros(num_states)
 for s in range(num_states):
@@ -123,5 +124,32 @@ def find_path(n):
             break
     return path
 
-# Exemplo de uso
+print('Valor ideal de cada estado (valor esperado de recompensa ao iniciar no estado e seguir a política ideal):')
+print('\tEstado frio: ', V[0])
+print('\tEstado quente: ', V[1])
+print('\tEstado fogo: ', V[2])
+
+
+print('Política ideal de cada estado (decisão a se tomar em cada estado): ')
+print('\tEstado frio: ', policy[0] , ' (0 = devagar, 1 = rapido)')
+print('\tEstado quente: ', policy[1] , ' (0 = devagar, 1 = rapido)')
+print('\tEstado fogo: ', policy[2] , ' (0 = devagar, 1 = rapido)')
+
+# Fazendo um grafico que relaciona o valor ideal de cada estado com a política ideal
+# exportando o gráfico para um arquivo
+plt.figure(figsize=(10, 5))
+plt.subplot(1, 2, 1)
+plt.bar(np.arange(num_states), V)
+plt.xticks(np.arange(num_states), ['frio', 'quente', 'fogo'])
+plt.title('Valor ideal de cada estado')
+plt.subplot(1, 2, 2)
+plt.bar(np.arange(num_states), policy)
+plt.xticks(np.arange(num_states), ['frio', 'quente', 'fogo'])
+plt.title('Política ideal de cada estado')
+plt.savefig('value_iteration.png')
+
+
+
+# Encontrando um caminho de tamanho 100 iniciando no estado frio
+
 print(find_path(100))
